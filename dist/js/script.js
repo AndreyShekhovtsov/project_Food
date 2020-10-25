@@ -98,4 +98,51 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setClock('.timer', deadline);
 
+    // Modal
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          modalClose = document.querySelector('[data-close]'),
+          modal = document.querySelector('.modal');
+
+
+    function modalShow (trigger, mod) {
+        trigger.forEach( btn => {
+            btn.addEventListener('click', () => {
+                // modal.style.display = 'block';
+                mod.classList.add('show');
+                mod.classList.remove('hide');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+    }
+    
+    function modalHide (close, mod) {
+        close.addEventListener('click', closeModal);
+        
+        mod.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                closeModal();
+            }
+        
+        // закрываем окно кнопкой Esc
+        document.addEventListener('keydown', (e) => {
+            if(e.code === 'Escape' && mod.classList.contains('show')) {
+                closeModal();
+            }
+        });
+        
+    });
+    
+    function closeModal () {
+        mod.classList.add('hide');
+        mod.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    }
+
+    modalShow(modalTrigger, modal);
+    modalHide(modalClose, modal);
+
+    
 });
